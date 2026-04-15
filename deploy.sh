@@ -1,14 +1,24 @@
 #!/bin/bash
 
-echo "Deploying website..."
+# 1. Clean out the old files completely
+sudo rm -rf /var/www/html/*
 
-sudo rm -f /var/www/html/index.html /var/www/html/index.nginx-debian.html <<EOF
-<h1> CI/CD WORKING </h1>
-<p> This updated automatically via CI/CD!</p>
+# 2. Create the fresh index.html file (Note the -c to bypass permissions)
+sudo bash -c 'cat <<EOF > /var/www/html/index.html
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>CI/CD IS FULLY WORKING!</h1>
+    <p>Deployed automatically via GitHub Actions.</p>
+</body>
+</html>
 EOF'
 
-# Give the web server permission to read the folder
+# 3. Fix Permissions (The "Unlocking" step)
 sudo chown -R www-data:www-data /var/www/html
 sudo chmod -R 755 /var/www/html
 
-echo "Done!"
+# 4. Restart Nginx to make sure it sees the change
+sudo systemctl restart nginx
+
+echo "Deployment Successful!"
