@@ -3,16 +3,21 @@
 echo "Updating server...."
 sudo apt update -y
 
-echo "installing nginx..."
+echo "Installing nginx..."
 sudo apt install nginx -y
 
 echo "Starting nginx...."
 sudo systemctl start nginx
+sudo systemctl enable nginx
 
-echo "Deploying website....."
-sudo bash -c 'cat > /var/www/html/indexc.nginx-debian.html <<EOF
-<h1> CI/CD WORkING </h1>
-<p1>This updated automatically </p>
+echo "Deploying website...."
+# This line deletes the old file so the new one can take over
+sudo rm -f /var/www/html/index.html /var/www/html/index.nginx-debian.html
+
+# This creates the CORRECT file name
+sudo bash -c 'cat <<EOF > /var/www/html/index.html
+<h1> CI/CD WORKING </h1>
+<p> This updated automatically via GitHub Actions! </p>
 EOF'
 
 echo "Done!"
