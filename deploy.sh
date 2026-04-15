@@ -8,8 +8,8 @@ sudo bash -c 'cat <<EOF > /var/www/html/index.html
 <!DOCTYPE html>
 <html>
 <body>
-    <h1>CI/CD IS FULLY WORKING!</h1>
-    <p>Deployed automatically via GitHub Actions.</p>
+    <h1 style="color: green;"> MY DEVOPS PROJECT</h1>
+    <p>This is Deployed automatically </p>
 </body>
 </html>
 EOF'
