@@ -1,28 +1,14 @@
 #!/bin/bash
 
-# 1. Clean out the old files completely
-sudo rm -rf /var/www/html/*
+echo "Pulling latest code..."
+git pull
 
-# 2. Create the fresh index.html file
-sudo bash -c 'cat <<EOF > /var/www/html/index.html
-<!DOCTYPE html>
-<html>
-<body>
-    <h1 style="color: green;"> MY DEVOPS PROJECT</h1>
-    <p>This is Deployed automatically </p>
-</body>
-</html>
-EOF'
+echo "Stopping old container..."
+sudo docker stop my-app || true
+sudo docker rm my-app || true
 
-# 3. Fix Permissions
-sudo chown -R www-data:www-data /var/www/html
-sudo chmod -R 755 /var/www/html
+echo "Building new image..."
+sudo docker build -t my-devops-app .
 
-# 4. Restart Nginx
-sudo systemctl restart nginx
-
-# 5. Backup to S3
-echo "uploading backup to s3....."
-aws s3 cp /var/www/html/index.html s3://my-devops-bucket-200123/
-
-echo "Deployment Successful!"
+echo "Running new container..."
+sudo docker run -d -p 80:80 --name my-app my-devops-app
