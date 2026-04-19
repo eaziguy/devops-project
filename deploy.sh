@@ -1,14 +1,15 @@
 #!/bin/bash
 
 echo "Pulling latest code..."
-git pull
+git pull origin main
 
 echo "Stopping old container..."
-sudo docker stop my-app || true
-sudo docker rm my-app || true
+# We use 'docker' without 'sudo' now
+docker stop my-app || true
+docker rm my-app || true
 
 echo "Building new image..."
-sudo docker build -t my-devops-app .
+docker build -t my-devops-app .
 
 echo "Running new container..."
-sudo docker run -d -p 80:80 --name my-app my-devops-app
+docker run -d -p 80:80 --name my-app my-devops-app
