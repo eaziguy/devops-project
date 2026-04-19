@@ -1,17 +1,15 @@
 #!/bin/bash
-
-# Force the path so GitHub can see it
-export PATH=$PATH:/usr/bin
+# Force the tool map
+export PATH=$PATH:/usr/bin:/usr/local/bin
 
 echo "Pulling latest code..."
 git pull origin main
 
 echo "Stopping old container..."
-docker stop my-app || true
-docker rm my-app || true
+# Using sudo here ensures the daemon connection never fails
+sudo docker stop my-app || true
+sudo docker rm my-app || true
 
-echo "Building new image..."
-docker build -t my-devops-app .
-
-echo "Running new container..."
-docker run -d -p 80:80 --name my-app my-devops-app
+echo "Building and Running..."
+sudo docker build -t my-devops-app .
+sudo docker run -d -p 80:80 --name my-app my-devops-app
