@@ -1,1 +1,21 @@
-<h1>Docker CI/CD is working </h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My DevOps App</title>
+</head>
+<body>
+
+  <h1>🚀 My DevOps App</h1>
+  <button onclick="callAPI()">Call API</button>
+
+  <p id="result"></p>
+
+  <script>
+    async function callAPI() {
+      const res = await fetch('/api');
+      const data = await res.json();
+      document.getElementById('result').innerText = data.message;
+    }
+  </script>
+
+</body>
