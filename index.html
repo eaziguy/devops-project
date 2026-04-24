@@ -1,21 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My DevOps App</title>
+  <meta charset="UTF-8">
+  <title>DevOps CI/CD Test</title>
+  <style>
+    body {
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .box {
+      text-align: center;
+      padding: 40px;
+      border-radius: 12px;
+      background: #1e293b;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #38bdf8;
+    }
+    p {
+      font-size: 1.2rem;
+      color: #94a3b8;
+    }
+  </style>
 </head>
 <body>
-
-  <h1>🚀 My DevOps App</h1>
-  <button onclick="callAPI()">Call API</button>
-
-  <p id="result"></p>
-
-  <script>
-    async function callAPI() {
-      const res = await fetch('/api');
-      const data = await res.json();
-      document.getElementById('result').innerText = data.message;
-    }
-  </script>
-
+  <div class="box">
+    <h1>CI/CD is working perfectly 🚀</h1>
+    <p>Your DevOps pipeline is LIVE 🔥</p>
+  </div>
 </body>
+</html>
