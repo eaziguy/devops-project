@@ -1,0 +1,6 @@
+.terraform/
+terraform/
+.git/
+*.tfstate
+*.tfstate.backup
+node_modules/
