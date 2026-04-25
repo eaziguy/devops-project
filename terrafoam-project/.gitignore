@@ -1,0 +1,3 @@
+.terrafoam/
+*.tfstate
+*.tfstate.backup
