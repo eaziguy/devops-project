@@ -39,14 +39,20 @@ resource "aws_security_group" "web_sg" {
 }
 
 resource "aws_instance" "my_server" {
+  count = 2
+
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
 
   security_groups = [aws_security_group.web_sg.name]
 
-  key_name = "my-new-secure-key"   # 👈 IMPORTANT
+  key_name = "my-new-secure-key"
 
   tags = {
     Name = "Terraform-App-Server"
   }
+}
+
+output "public_ips" {
+  value = aws_instance.my_server[*].public_ip
 }
