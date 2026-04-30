@@ -26,18 +26,3 @@ jobs:
             docker rm myapp || true
             docker run -d -p 80:3000 --name myapp myapp
 
-      - name: Deploy to Server 2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST_2 }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd devops-project || git clone https://github.com/eaziguy/devops-project.git
-            cd devops-project
-            git pull
-            docker system prune -a -f
-            docker build -t myapp .
-            docker stop myapp || true
-            docker rm myapp || true
-            docker run -d -p 80:3000 --name myapp myapp
