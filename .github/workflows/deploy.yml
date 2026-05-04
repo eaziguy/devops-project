@@ -10,19 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to Server 1
+      - name: Deploy to Terraform Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd devops-project || git clone https://github.com/eaziguy/devops-project.git
-            cd devops-project
-            git pull
-            docker system prune -a -f
-            docker build -t myapp .
+            if [ ! -d "/home/ubuntu/devops-project" ]; then
+              git clone https://github.com/eaziguy/devops-project.git /home/ubuntu/devops-project
+            fi
+
+            cd /home/ubuntu/devops-project
+            git pull origin main
+
             docker stop myapp || true
             docker rm myapp || true
-            docker run -d -p 80:3000 --name myapp myapp
 
+            docker build -t myapp .
+            docker run -d --name myapp -p 80:3000 myapp
